@@ -1,6 +1,7 @@
 import React from 'react';
 import { Database, Send, BarChart3, Settings, MessageCircle } from 'lucide-react';
-import { Screen } from '../App';
+import { BolivarianoLogo } from './BolivarianoLogo';
+import { Screen } from '../app/App';
 
 interface AdminSidebarProps {
   currentScreen: Screen;
@@ -17,21 +18,19 @@ export function AdminSidebar({ currentScreen, onScreenChange }: AdminSidebarProp
   ];
 
   return (
-    <aside className="w-72 bg-card border-r border-border shadow-sm flex flex-col">
+    <aside className="w-72 bg-card border-r border-bolivariano-blue-200 shadow-sm flex flex-col">
       <div className="p-6 flex-1">
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-lg text-white">B</span>
-            </div>
+            <BolivarianoLogo size="lg" variant="gradient" />
             <div>
-              <h2 className="font-medium text-foreground">Bolivariano</h2>
-              <p className="text-xs text-muted-foreground">Panel Administrativo</p>
+              <h2 className="font-medium text-bolivariano-dark">Bolivariano</h2>
+              <p className="text-xs text-bolivariano-blue-600">Panel Administrativo</p>
             </div>
           </div>
-          <div className="inline-flex items-center px-3 py-1.5 bg-primary/10 text-primary rounded-full">
-            <span className="w-2 h-2 bg-primary rounded-full mr-2"></span>
-            <span className="text-sm">Panel de Administrador</span>
+          <div className="inline-flex items-center px-3 py-1.5 bg-bolivariano-blue-100 text-bolivariano-blue-700 rounded-full border border-bolivariano-blue-200">
+            <span className="w-2 h-2 bg-bolivariano-primary rounded-full mr-2"></span>
+            <span className="text-sm font-medium">Panel de Administrador</span>
           </div>
         </div>
         
@@ -48,10 +47,10 @@ export function AdminSidebar({ currentScreen, onScreenChange }: AdminSidebarProp
                 disabled={isDisabled}
                 className={`w-full flex items-center justify-between px-4 py-3.5 rounded-xl transition-all duration-200 ${
                   isActive
-                    ? 'bg-primary text-primary-foreground shadow-sm'
+                    ? 'bg-bolivariano-primary text-white shadow-sm'
                     : isDisabled
-                    ? 'text-muted-foreground cursor-not-allowed opacity-60'
-                    : 'text-foreground hover:bg-accent hover:text-accent-foreground'
+                    ? 'text-bolivariano-blue-400 cursor-not-allowed opacity-60'
+                    : 'text-bolivariano-dark hover:bg-bolivariano-blue-100 hover:text-bolivariano-blue-700'
                 }`}
               >
                 <div className="flex items-center space-x-3">
@@ -61,8 +60,8 @@ export function AdminSidebar({ currentScreen, onScreenChange }: AdminSidebarProp
                 {item.badge && (
                   <span className={`text-xs px-2 py-1 rounded-full ${
                     item.badge === 'Próximo' 
-                      ? 'bg-muted text-muted-foreground'
-                      : 'bg-primary text-primary-foreground'
+                      ? 'bg-bolivariano-blue-200 text-bolivariano-blue-600'
+                      : 'bg-bolivariano-primary text-white'
                   }`}>
                     {item.badge}
                   </span>

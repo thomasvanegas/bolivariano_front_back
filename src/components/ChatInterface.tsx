@@ -79,7 +79,7 @@ export function ChatInterface() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-muted/30">
+    <div className="flex flex-col h-full bg-bolivariano-blue-50">
       {/* Chat Messages */}
       <ScrollArea className="flex-1 p-4">
         <div className="space-y-4 max-w-4xl mx-auto">
@@ -89,7 +89,7 @@ export function ChatInterface() {
               className={`flex gap-3 ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               {message.sender === 'bot' && (
-                <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                <div className="w-8 h-8 bg-bolivariano-primary rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                   <Bot className="w-4 h-4 text-white" />
                 </div>
               )}
@@ -97,8 +97,8 @@ export function ChatInterface() {
               <div
                 className={`max-w-[80%] sm:max-w-[70%] md:max-w-[60%] p-3 rounded-lg ${
                   message.sender === 'user'
-                    ? 'bg-primary text-primary-foreground ml-auto'
-                    : 'bg-card border text-card-foreground'
+                    ? 'bg-bolivariano-primary text-white ml-auto'
+                    : 'bg-white border border-bolivariano-blue-200 text-bolivariano-dark'
                 }`}
               >
                 <p className="text-sm leading-relaxed">{message.content}</p>
@@ -108,8 +108,8 @@ export function ChatInterface() {
               </div>
 
               {message.sender === 'user' && (
-                <div className="w-8 h-8 bg-secondary rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                  <User className="w-4 h-4 text-secondary-foreground" />
+                <div className="w-8 h-8 bg-bolivariano-blue-200 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                  <User className="w-4 h-4 text-bolivariano-blue-700" />
                 </div>
               )}
             </div>
@@ -117,14 +117,14 @@ export function ChatInterface() {
           
           {isTyping && (
             <div className="flex gap-3 justify-start">
-              <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+              <div className="w-8 h-8 bg-bolivariano-primary rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                 <Bot className="w-4 h-4 text-white" />
               </div>
-              <div className="bg-card border text-card-foreground p-3 rounded-lg">
+              <div className="bg-white border border-bolivariano-blue-200 text-bolivariano-dark p-3 rounded-lg">
                 <div className="flex space-x-1">
-                  <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"></div>
-                  <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                  <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                  <div className="w-2 h-2 bg-bolivariano-blue-400 rounded-full animate-bounce"></div>
+                  <div className="w-2 h-2 bg-bolivariano-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                  <div className="w-2 h-2 bg-bolivariano-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                 </div>
               </div>
             </div>
@@ -136,7 +136,7 @@ export function ChatInterface() {
       </ScrollArea>
 
       {/* Input Area */}
-      <div className="border-t bg-card p-4">
+      <div className="border-t border-bolivariano-blue-200 bg-white p-4">
         <div className="max-w-4xl mx-auto flex gap-2">
           <Input
             value={inputValue}
@@ -155,7 +155,7 @@ export function ChatInterface() {
             <span className="sr-only">Enviar mensaje</span>
           </Button>
         </div>
-        <p className="text-xs text-muted-foreground text-center mt-2 max-w-4xl mx-auto">
+        <p className="text-xs text-bolivariano-blue-600 text-center mt-2 max-w-4xl mx-auto">
           Especializado en procedimientos académicos, reglamento estudiantil, prácticas profesionales y calendario académico
         </p>
       </div>

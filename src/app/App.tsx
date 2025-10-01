@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useState } from 'react';
 import { ChatInterface } from '../components/ChatInterface';
 import { Sidebar } from '../components/Sidebar';
@@ -56,7 +58,7 @@ export default function App() {
   };
 
   return (
-    <div className="h-screen flex bg-background">
+    <div className="h-screen flex bg-bolivariano-blue-50">
       {/* Desktop Sidebar - hidden on mobile */}
       <div className="hidden md:block">
         {userRole === 'admin' ? (

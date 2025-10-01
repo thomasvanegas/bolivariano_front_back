@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from './ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from './ui/sheet';
 import { Menu, MessageCircle, History, Quote, HelpCircle, Bell, BookOpen, Send, LogOut } from 'lucide-react';
-import { Screen, UserRole } from '../App';
+import { Screen, UserRole } from '../app/App';
 
 interface MobileNavProps {
   currentScreen: Screen;

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Button } from './ui/button';
 import { MobileNav } from './MobileNav';
+import { BolivarianoLogo } from './BolivarianoLogo';
 import { LogOut } from 'lucide-react';
-import { Screen, UserRole } from '../App';
+import { Screen, UserRole } from '../app/App';
 
 interface HeaderProps {
   userRole: UserRole;
@@ -23,11 +24,9 @@ export function Header({ userRole, onRoleChange, currentScreen, onScreenChange, 
           onLogout={onLogout}
         />
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-primary rounded-md flex items-center justify-center">
-            <span className="text-sm text-white">B</span>
-          </div>
+          <BolivarianoLogo size="md" variant="gradient" />
           <div className="hidden sm:block">
-            <h1 className="font-medium">Bolivariano</h1>
+            <h1 className="font-medium text-foreground">Bolivariano</h1>
             <p className="text-xs text-muted-foreground">
               {userRole === 'admin' ? 'Panel Administrativo' : 'Asistente Académico'}
             </p>

@@ -112,7 +112,7 @@ export function NotificationManagerScreen() {
     }, 2000);
   };
 
-  const useTemplate = (template: NotificationTemplate) => {
+  const handleUseTemplate = (template: NotificationTemplate) => {
     setTitle(template.title);
     setMessage(template.message);
     setNotificationType(template.type);
@@ -205,7 +205,7 @@ export function NotificationManagerScreen() {
                     </label>
                     <select
                       value={notificationType}
-                      onChange={(e) => setNotificationType(e.target.value as any)}
+                      onChange={(e) => setNotificationType(e.target.value as 'info' | 'success' | 'warning')}
                       className="w-full border border-border rounded-md px-3 py-2 bg-background text-foreground text-sm"
                     >
                       <option value="info">Informativa</option>
@@ -281,7 +281,7 @@ export function NotificationManagerScreen() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => useTemplate(template)}
+                      onClick={() => handleUseTemplate(template)}
                       className="w-full justify-start h-8 text-xs"
                     >
                       Usar plantilla

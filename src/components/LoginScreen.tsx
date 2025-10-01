@@ -4,6 +4,7 @@ import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
+import { BolivarianoLogo } from './BolivarianoLogo';
 import { GraduationCap, Shield, User, Lock } from 'lucide-react';
 
 interface LoginScreenProps {
@@ -38,18 +39,16 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-bolivariano-blue-50 to-bolivariano-blue-100 flex items-center justify-center p-4">
       <div className="w-full max-w-md space-y-6">
         {/* Logo y Header */}
         <div className="text-center space-y-4">
           <div className="flex justify-center">
-            <div className="w-16 h-16 bg-primary rounded-lg flex items-center justify-center shadow-lg">
-              <span className="text-2xl text-white">B</span>
-            </div>
+            <BolivarianoLogo size="xl" variant="gradient" className="shadow-lg" />
           </div>
           <div>
-            <h1 className="text-3xl tracking-tight text-gray-900">Bolivariano</h1>
-            <p className="text-sm text-muted-foreground mt-1">
+            <h1 className="text-3xl tracking-tight text-bolivariano-dark font-bold">Bolivariano</h1>
+            <p className="text-sm text-bolivariano-blue-700 mt-1 font-medium">
               Asistente Académico Inteligente
             </p>
           </div>
