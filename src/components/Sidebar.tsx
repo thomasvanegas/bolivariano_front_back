@@ -12,7 +12,7 @@ export function Sidebar({ currentScreen, onScreenChange }: SidebarProps) {
   const menuItems = [
     { id: 'chat' as Screen, icon: MessageCircle, label: 'Chat Académico', badge: null },
     { id: 'history' as Screen, icon: History, label: 'Historial', badge: null },
-    { id: 'citation' as Screen, icon: Quote, label: 'Citaciones', badge: null },
+    { id: 'citation' as Screen, icon: Quote, label: 'Citaciones', badge: 'Próximamente' },
     { id: 'examples' as Screen, icon: HelpCircle, label: 'Preguntas Ejemplo', badge: null },
     { id: 'notifications' as Screen, icon: Bell, label: 'Notificaciones', badge: 3 },
   ];
@@ -22,9 +22,9 @@ export function Sidebar({ currentScreen, onScreenChange }: SidebarProps) {
       <div className="p-6 flex-1">
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">
-            <BolivarianoLogo size="lg" variant="gradient" />
+            <BolivarianoLogo size="lg" variant="tile" />
             <div>
-              <h2 className="font-medium text-bolivariano-dark">Bolivariano</h2>
+              <h2 className="font-medium text-black">Bolivariano</h2>
               <p className="text-xs text-bolivariano-blue-600">Asistente Académico</p>
             </div>
           </div>
@@ -43,10 +43,10 @@ export function Sidebar({ currentScreen, onScreenChange }: SidebarProps) {
               <button
                 key={item.id}
                 onClick={() => onScreenChange(item.id)}
-                className={`w-full flex items-center justify-between px-4 py-3.5 rounded-xl transition-all duration-200 ${
+                className={`w-full flex items-center justify-between px-4 py-3.5 rounded-xl ${
                   isActive
-                    ? 'bg-bolivariano-primary text-white shadow-sm'
-                    : 'text-bolivariano-dark hover:bg-bolivariano-blue-100 hover:text-bolivariano-blue-700'
+                    ? 'text-bolivariano-blue-700 font-medium'
+                    : 'text-bolivariano-dark'
                 }`}
               >
                 <div className="flex items-center space-x-3">

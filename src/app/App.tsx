@@ -13,29 +13,52 @@ import { NotificationsScreen } from '../components/NotificationsScreen';
 import { KnowledgeBaseScreen } from '../components/KnowledgeBaseScreen';
 import { NotificationManagerScreen } from '../components/NotificationManagerScreen';
 
+/**
+ * Conjunto de pantallas disponibles en la aplicación.
+ */
 export type Screen = 'chat' | 'history' | 'citation' | 'examples' | 'notifications' | 'knowledge-base' | 'notification-manager';
+
+/**
+ * Roles admitidos para controlar la experiencia de usuario (permisos y navegación).
+ */
 export type UserRole = 'student' | 'admin';
 
+/**
+ * Componente raíz de la aplicación. Gestiona autenticación, rol y navegación entre pantallas.
+ */
 export default function App() {
+  // Pantalla actualmente activa en el contenido principal
   const [currentScreen, setCurrentScreen] = useState<Screen>('chat');
+  // Rol del usuario autenticado (afecta navegación y menús)
   const [userRole, setUserRole] = useState<UserRole>('student');
+  // Estado de autenticación básico para mostrar login o el resto de la app
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  /**
+   * Maneja el inicio de sesión estableciendo rol, autenticación y llevando al chat.
+   */
   const handleLogin = (role: UserRole) => {
     setUserRole(role);
     setIsAuthenticated(true);
     setCurrentScreen('chat');
   };
 
+  /**
+   * Cierra sesión y regresa a la pantalla de chat por defecto.
+   */
   const handleLogout = () => {
     setIsAuthenticated(false);
     setCurrentScreen('chat');
   };
 
+  // Si no está autenticado, se muestra la pantalla de login y se detiene el render del resto
   if (!isAuthenticated) {
     return <LoginScreen onLogin={handleLogin} />;
   }
 
+  /**
+   * Devuelve el contenido principal según la pantalla seleccionada.
+   */
   const renderContent = () => {
     switch (currentScreen) {
       case 'chat':
@@ -69,6 +92,7 @@ export default function App() {
       </div>
       
       <div className="flex-1 flex flex-col min-w-0">
+        {/* Barra superior: permite cambiar rol, navegar y cerrar sesión */}
         <Header 
           userRole={userRole} 
           onRoleChange={setUserRole}
@@ -77,6 +101,7 @@ export default function App() {
           onLogout={handleLogout}
         />
         <main className="flex-1 overflow-hidden">
+          {/* Contenido principal segun la pantalla activa */}
           {renderContent()}
         </main>
       </div>

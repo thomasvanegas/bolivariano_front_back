@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Bolivariano - Asistente Académico",
+  title: "Bolivariano - Asistente Académico Inteligente",
   description: "Portal estudiantil con asistente académico inteligente para consultas sobre procedimientos, reglamento y calendario académico",
 };
 
@@ -23,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="es">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

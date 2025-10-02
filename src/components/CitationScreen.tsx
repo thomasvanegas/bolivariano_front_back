@@ -57,7 +57,7 @@ export function CitationScreen() {
       <div className="max-w-5xl mx-auto w-full space-y-6 md:space-y-8">
         {/* Header */}
         <div className="bg-card rounded-xl shadow-sm border border-border p-4 md:p-8">
-          <h2 className="text-2xl md:text-3xl font-semibold text-foreground">Verificador de Citaciones</h2>
+          <h2 className="text-2xl md:text-3xl font-semibold text-foreground">Verificador de Citaciones (Próximamente Implementado: 2026-10)</h2>
           <p className="text-muted-foreground mt-2">
             Verifica y valida tus citaciones académicas según diferentes estilos
           </p>

@@ -24,7 +24,7 @@ export function Header({ userRole, onRoleChange, currentScreen, onScreenChange, 
           onLogout={onLogout}
         />
         <div className="flex items-center gap-3">
-          <BolivarianoLogo size="md" variant="gradient" />
+          <BolivarianoLogo size="md" variant="tile" />
           <div className="hidden sm:block">
             <h1 className="font-medium text-foreground">Bolivariano</h1>
             <p className="text-xs text-muted-foreground">
@@ -36,23 +36,20 @@ export function Header({ userRole, onRoleChange, currentScreen, onScreenChange, 
       
       <div className="flex items-center gap-2">
         {/* Desktop role switcher - hidden on mobile */}
-        <div className="hidden md:flex items-center gap-2">
-          <Button
-            variant={userRole === 'student' ? 'default' : 'outline'}
-            size="sm"
+        <div className="hidden md:flex items-center gap-3">
+          <button
             onClick={() => onRoleChange('student')}
-            className="text-xs"
+            className={`text-xs ${userRole === 'student' ? 'text-bolivariano-blue-700 font-medium' : 'text-foreground'}`}
           >
             Estudiante
-          </Button>
-          <Button
-            variant={userRole === 'admin' ? 'default' : 'outline'}
-            size="sm"
+          </button>
+          <span className="text-muted-foreground"> / </span>
+          <button
             onClick={() => onRoleChange('admin')}
-            className="text-xs"
+            className={`text-xs ${userRole === 'admin' ? 'text-bolivariano-blue-700 font-medium' : 'text-foreground'}`}
           >
             Admin
-          </Button>
+          </button>
         </div>
         
         {/* Desktop logout - hidden on mobile */}

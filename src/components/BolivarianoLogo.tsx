@@ -3,7 +3,7 @@ import { cn } from './ui/utils';
 
 interface BolivarianoLogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
-  variant?: 'default' | 'outline' | 'gradient';
+  variant?: 'default' | 'outline' | 'gradient' | 'tile';
   className?: string;
 }
 
@@ -22,7 +22,10 @@ export function BolivarianoLogo({
   const variantClasses = {
     default: 'bg-bolivariano-primary text-white',
     outline: 'border-2 border-bolivariano-primary text-bolivariano-primary bg-transparent',
-    gradient: 'bg-gradient-to-br from-bolivariano-primary to-bolivariano-secondary text-white'
+    // Mayor contraste: degradado azul más oscuro, borde y sombra de texto
+    gradient: 'bg-gradient-to-br from-bolivariano-blue-700 to-bolivariano-blue-500 text-white ring-1 ring-bolivariano-blue-200 drop-shadow-[0_1px_1px_rgba(0,0,0,0.45)] shadow',
+    // Azulejo blanco con B azul para máxima legibilidad en fondos blancos
+    tile: 'bg-white text-bolivariano-blue-700 border border-gray-200 shadow-sm'
   };
 
   return (

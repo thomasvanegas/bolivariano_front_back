@@ -13,8 +13,8 @@ export function AdminSidebar({ currentScreen, onScreenChange }: AdminSidebarProp
     { id: 'chat' as Screen, icon: MessageCircle, label: 'Chat Académico', badge: null },
     { id: 'knowledge-base' as Screen, icon: Database, label: 'Base de Conocimiento', badge: null },
     { id: 'notification-manager' as Screen, icon: Send, label: 'Gestionar Notificaciones', badge: null },
-    { id: 'analytics' as Screen, icon: BarChart3, label: 'Analíticas', badge: 'Próximo' },
-    { id: 'settings' as Screen, icon: Settings, label: 'Configuración', badge: null },
+    { id: 'analytics' as Screen, icon: BarChart3, label: 'Analíticas', badge: 'Próximamente' },
+    { id: 'settings' as Screen, icon: Settings, label: 'Configuración', badge: 'Próximamente' },
   ];
 
   return (
@@ -22,9 +22,9 @@ export function AdminSidebar({ currentScreen, onScreenChange }: AdminSidebarProp
       <div className="p-6 flex-1">
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">
-            <BolivarianoLogo size="lg" variant="gradient" />
+            <BolivarianoLogo size="lg" variant="tile" />
             <div>
-              <h2 className="font-medium text-bolivariano-dark">Bolivariano</h2>
+              <h2 className="font-medium text-black">Bolivariano</h2>
               <p className="text-xs text-bolivariano-blue-600">Panel Administrativo</p>
             </div>
           </div>
@@ -45,12 +45,12 @@ export function AdminSidebar({ currentScreen, onScreenChange }: AdminSidebarProp
                 key={item.id}
                 onClick={() => !isDisabled && onScreenChange(item.id)}
                 disabled={isDisabled}
-                className={`w-full flex items-center justify-between px-4 py-3.5 rounded-xl transition-all duration-200 ${
+                className={`w-full flex items-center justify-between px-4 py-3.5 rounded-xl ${
                   isActive
-                    ? 'bg-bolivariano-primary text-white shadow-sm'
+                    ? 'text-bolivariano-blue-700 font-medium'
                     : isDisabled
                     ? 'text-bolivariano-blue-400 cursor-not-allowed opacity-60'
-                    : 'text-bolivariano-dark hover:bg-bolivariano-blue-100 hover:text-bolivariano-blue-700'
+                    : 'text-bolivariano-dark'
                 }`}
               >
                 <div className="flex items-center space-x-3">
