@@ -5,7 +5,9 @@ import { Label } from './ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Tabs, TabsContent } from './ui/tabs';
 import { BolivarianoLogo } from './BolivarianoLogo';
-import { GraduationCap, Shield, User, Lock } from 'lucide-react';
+import { GraduationCap, Shield, User, Lock, AlertCircle } from 'lucide-react';
+import { api, authUtils } from '@/lib/api';
+import { Alert, AlertDescription } from './ui/alert';
 
 /**
  * Props de la pantalla de inicio de sesión.
@@ -28,35 +30,67 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
   const [isLoading, setIsLoading] = useState(false);
   // Rol seleccionado actualmente para mostrar el formulario correspondiente
   const [selectedRole, setSelectedRole] = useState<'student' | 'admin'>('student');
+  // Estado para mensajes de error
+  const [error, setError] = useState<string>('');
 
   /**
    * Maneja el envío del formulario de Estudiante.
-   * Simula una verificación asíncrona y, si es "exitosa", notifica el rol 'student'.
+   * Realiza la autenticación contra la API real.
    */
   const handleStudentLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError('');
     
-    // Simular autenticación
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      // Llamar a la API para autenticar
+      const response = await api.loginStudent({
+        student_id: studentForm.id,
+        password: studentForm.password,
+      });
+
+      // Guardar token y datos del usuario
+      authUtils.saveToken(response.access_token);
+      authUtils.saveUser(response.user);
+
+      // Notificar éxito al componente padre
       onLogin('student');
-    }, 1000);
+    } catch (err: any) {
+      // Mostrar error al usuario
+      setError(err.message || 'Error al iniciar sesión. Verifica tus credenciales.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   /**
    * Maneja el envío del formulario de Administrador.
-   * Simula una verificación asíncrona y, si es "exitosa", notifica el rol 'admin'.
+   * Realiza la autenticación contra la API real.
    */
   const handleAdminLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError('');
     
-    // Simular autenticación
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      // Llamar a la API para autenticar
+      const response = await api.loginAdmin({
+        username: adminForm.username,
+        password: adminForm.password,
+      });
+
+      // Guardar token y datos del usuario
+      authUtils.saveToken(response.access_token);
+      authUtils.saveUser(response.user);
+
+      // Notificar éxito al componente padre
       onLogin('admin');
-    }, 1000);
+    } catch (err: any) {
+      // Mostrar error al usuario
+      setError(err.message || 'Error al iniciar sesión. Verifica tus credenciales.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -87,6 +121,14 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
             </CardDescription>
           </CardHeader>
           <CardContent className="pt-0">
+            {/* Mensaje de error si existe */}
+            {error && (
+              <Alert variant="destructive" className="mb-4">
+                <AlertCircle className="h-4 w-4" />
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
+
             {/* Selector visual de rol para mostrar el formulario correspondiente */}
             <div className="flex items-center justify-center gap-3 mb-6">
               <button
