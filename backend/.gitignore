@@ -58,3 +58,6 @@ htmlcov/
 # Variables de entorno
 VARIABLES_ENTORNO.txt
 .env
+
+# markdown
+/markdown
