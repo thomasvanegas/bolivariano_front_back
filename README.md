@@ -3,15 +3,10 @@
 Puedes visualizar la aplicación desplegada en [https://bolivariano.vercel.app/](https://bolivariano.vercel.app/)
 
 ## Home de Bolivariano
-<p align="center">
-  <img src="./public/home-ui.png" alt="Vista previa del home" width="600">
-</p>
+![Vista previa del home](./public/home-ui.png)
 
 ## Vista Previa del Chatbot
-<p align="center">
-  <img src="./public/chat-ui.png" alt="Vista previa del chatbot" width="600">
-</p>
-
+![Vista previa del chatbot](./public/chat-ui.png)
 
 ## Desarrolladores.
 1. Thomas Camilo Vanegas Acevedo
