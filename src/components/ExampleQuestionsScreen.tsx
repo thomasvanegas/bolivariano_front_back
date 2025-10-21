@@ -132,7 +132,7 @@ export function ExampleQuestionsScreen() {
                         variant="ghost"
                         size="sm"
                         onClick={() => handleUseQuestion(question)}
-                        className="text-primary hover:text-primary hover:bg-primary/10 h-7 md:h-8 px-2 md:px-3 text-xs md:text-sm"
+                        className="text-[#DD198D] hover:text-[#B934E3] hover:bg-pink-50 h-7 md:h-8 px-2 md:px-3 text-xs md:text-sm"
                       >
                         Usar pregunta
                       </Button>
@@ -149,7 +149,7 @@ export function ExampleQuestionsScreen() {
           <h3 className="text-lg md:text-xl font-semibold text-foreground mb-4 md:mb-6">Consejos para mejores preguntas</h3>
           <div className="grid gap-4 md:gap-6 md:grid-cols-2">
             <div className="flex items-start space-x-3 md:space-x-4">
-              <div className="w-3 h-3 bg-primary rounded-full mt-2 flex-shrink-0" />
+              <div className="w-3 h-3 bg-[#DD198D] rounded-full mt-2 flex-shrink-0" />
               <div className="min-w-0">
                 <h4 className="font-semibold text-foreground text-sm md:text-base">Sé específico</h4>
                 <p className="text-muted-foreground mt-1 text-sm md:text-base break-words">
@@ -158,7 +158,7 @@ export function ExampleQuestionsScreen() {
               </div>
             </div>
             <div className="flex items-start space-x-3 md:space-x-4">
-              <div className="w-3 h-3 bg-primary rounded-full mt-2 flex-shrink-0" />
+              <div className="w-3 h-3 bg-[#B934E3] rounded-full mt-2 flex-shrink-0" />
               <div className="min-w-0">
                 <h4 className="font-semibold text-foreground text-sm md:text-base">Pide ejemplos</h4>
                 <p className="text-muted-foreground mt-1 text-sm md:text-base break-words">
@@ -167,7 +167,7 @@ export function ExampleQuestionsScreen() {
               </div>
             </div>
             <div className="flex items-start space-x-3 md:space-x-4">
-              <div className="w-3 h-3 bg-primary rounded-full mt-2 flex-shrink-0" />
+              <div className="w-3 h-3 bg-[#F3095A] rounded-full mt-2 flex-shrink-0" />
               <div className="min-w-0">
                 <h4 className="font-semibold text-foreground text-sm md:text-base">Solicita fuentes</h4>
                 <p className="text-muted-foreground mt-1 text-sm md:text-base break-words">
@@ -176,7 +176,7 @@ export function ExampleQuestionsScreen() {
               </div>
             </div>
             <div className="flex items-start space-x-3 md:space-x-4">
-              <div className="w-3 h-3 bg-primary rounded-full mt-2 flex-shrink-0" />
+              <div className="w-3 h-3 bg-[#DD198D] rounded-full mt-2 flex-shrink-0" />
               <div className="min-w-0">
                 <h4 className="font-semibold text-foreground text-sm md:text-base">Estructura tu consulta</h4>
                 <p className="text-muted-foreground mt-1 text-sm md:text-base break-words">

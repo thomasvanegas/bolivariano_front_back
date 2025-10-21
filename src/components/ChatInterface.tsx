@@ -97,7 +97,7 @@ export function ChatInterface() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-gray-50">
+    <div className="flex flex-col h-full bg-white">
       {/* Chat Messages - ScrollArea con altura definida */}
       <div className="flex-1 overflow-hidden">
         <ScrollArea className="h-full">
@@ -109,7 +109,7 @@ export function ChatInterface() {
                   className={`flex gap-3 ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   {message.sender === 'bot' && (
-                    <div className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <div className="w-8 h-8 bg-gradient-to-r from-[#DD198D] to-[#B934E3] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                       <Bot className="w-4 h-4 text-white" />
                     </div>
                   )}
@@ -117,21 +117,21 @@ export function ChatInterface() {
                   <div
                     className={`max-w-[80%] sm:max-w-[70%] md:max-w-[60%] p-3 rounded-lg break-words ${
                       message.sender === 'user'
-                        ? 'bg-gray-800 text-white ml-auto'
-                        : 'bg-white border border-gray-300 text-gray-900'
+                        ? 'bg-gradient-to-r from-[#DD198D] to-[#B934E3] text-white ml-auto'
+                        : 'bg-white border border-gray-200 text-gray-900 shadow-sm'
                     }`}
                   >
                     <p className="text-sm leading-relaxed whitespace-pre-wrap break-words overflow-wrap-anywhere">
                       {message.content}
                     </p>
-                    <span className={`text-xs mt-2 block ${message.sender === 'user' ? 'text-gray-300' : 'text-gray-500'}`}>
+                    <span className={`text-xs mt-2 block ${message.sender === 'user' ? 'text-white/80' : 'text-gray-500'}`}>
                       {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </span>
                   </div>
 
                   {message.sender === 'user' && (
-                    <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                      <User className="w-4 h-4 text-gray-800" />
+                    <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1 border border-gray-200">
+                      <User className="w-4 h-4 text-gray-700" />
                     </div>
                   )}
                 </div>
@@ -139,14 +139,14 @@ export function ChatInterface() {
               
               {isTyping && (
                 <div className="flex gap-3 justify-start">
-                  <div className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                  <div className="w-8 h-8 bg-gradient-to-r from-[#DD198D] to-[#B934E3] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                     <Bot className="w-4 h-4 text-white" />
                   </div>
-                  <div className="bg-white border border-gray-300 text-gray-900 p-3 rounded-lg">
+                  <div className="bg-white border border-gray-200 text-gray-900 p-3 rounded-lg shadow-sm">
                     <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                      <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                      <div className="w-2 h-2 bg-[#DD198D] rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-[#B934E3] rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                      <div className="w-2 h-2 bg-[#F3095A] rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                     </div>
                   </div>
                 </div>
@@ -173,7 +173,7 @@ export function ChatInterface() {
           <Button 
             onClick={handleSendMessage} 
             disabled={!inputValue.trim() || isTyping}
-            className="px-3 sm:px-4 bg-gray-800 hover:bg-black text-white"
+            className="px-3 sm:px-4 bg-gradient-to-r from-[#DD198D] to-[#B934E3] hover:opacity-90 text-white"
           >
             <Send className="w-4 h-4" />
             <span className="sr-only">Enviar mensaje</span>

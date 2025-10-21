@@ -4,35 +4,36 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "./utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-smooth disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-upb-pink/50",
   {
     variants: {
       variant: {
-        // Azul corporativo por defecto
+        // Rosa UPB por defecto
         default:
-          "bg-bolivariano-blue-700 text-white border border-bolivariano-blue-800 hover:bg-bolivariano-blue-800",
-        // Peligro conserva esquema rojo
+          "bg-upb-pink text-white border border-upb-pink hover:bg-upb-purple",
+        // Peligro
         destructive:
-          "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
-        // Contorno azul profesional
+          "bg-destructive text-white hover:bg-destructive/90 border border-destructive",
+        // Contorno con color UPB
         outline:
-          "border border-bolivariano-blue-700 bg-white text-bolivariano-blue-700 hover:bg-bolivariano-blue-50",
-        // Secundario: fondo blanco, texto oscuro
+          "border-2 border-gray-300 bg-white text-gray-700 hover:bg-gray-50 hover:border-upb-pink hover:text-upb-pink",
+        // Secundario con morado
         secondary:
-          "bg-white text-bolivariano-dark border border-gray-200 hover:bg-bolivariano-blue-50 hover:text-bolivariano-blue-800",
-        // Ghost con acento azul
+          "bg-upb-purple text-white border border-upb-purple hover:bg-upb-red",
+        // Ghost limpio
         ghost:
-          "text-bolivariano-blue-700 hover:bg-bolivariano-blue-50",
-        // Enlaces con color azul corporativo
-        link: "text-bolivariano-blue-700 underline-offset-4 hover:underline",
+          "text-gray-700 hover:bg-gray-100 hover:text-upb-pink",
+        // Enlaces con rosa UPB
+        link: 
+          "text-upb-pink underline-offset-4 hover:underline hover:text-upb-purple",
         // Variante negra profesional
         black:
-          "bg-neutral-900 text-white border border-neutral-950 hover:bg-neutral-800",
+          "bg-upb-black text-white border border-upb-black hover:opacity-80",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
         sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
-        lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
+        lg: "h-11 rounded-md px-8 has-[>svg]:px-6",
         icon: "size-9 rounded-md",
       },
     },

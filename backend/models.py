@@ -1,6 +1,14 @@
-from sqlalchemy import Column, String, DateTime, Boolean, Integer
+from sqlalchemy import Column, String, DateTime, Boolean, Integer, Text, Enum
 from sqlalchemy.sql import func
 from database import Base
+import enum
+
+
+class DocumentStatus(str, enum.Enum):
+    """Estados posibles de un documento"""
+    PROCESSING = "processing"
+    READY = "ready"
+    ERROR = "error"
 
 
 class Student(Base):
@@ -36,3 +44,35 @@ class Admin(Base):
     is_superuser = Column(Boolean, default=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+
+
+class Document(Base):
+    """
+    Modelo para documentos de la base de conocimiento.
+    Almacena metadata de documentos subidos al storage en la nube.
+    """
+    __tablename__ = "documents"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False)  # Nombre original del archivo
+    file_type = Column(String, nullable=False)  # PDF, DOC, DOCX
+    file_size = Column(Integer, nullable=False)  # Tamaño en bytes
+    category = Column(String, default="Sin categoría")  # Categoría del documento
+    status = Column(Enum(DocumentStatus), default=DocumentStatus.PROCESSING)
+    
+    # URLs y paths en el storage
+    storage_url = Column(String, nullable=False)  # URL pública del documento
+    storage_key = Column(String, nullable=False, unique=True)  # Key/path único en el storage
+    
+    # Información del uploader
+    uploaded_by = Column(Integer, nullable=True)  # ID del admin que subió
+    uploaded_by_type = Column(String, nullable=True)  # "admin" o "student"
+    
+    # Metadata adicional
+    description = Column(Text, nullable=True)
+    tags = Column(String, nullable=True)  # Tags separados por comas
+    
+    # Timestamps
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    processed_at = Column(DateTime(timezone=True), nullable=True)  # Cuando se completó el procesamiento

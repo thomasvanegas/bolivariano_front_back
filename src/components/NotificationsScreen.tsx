@@ -73,11 +73,11 @@ export function NotificationsScreen() {
       case 'success':
         return 'text-green-600 bg-green-100';
       case 'warning':
-        return 'text-yellow-600 bg-yellow-100';
+        return 'text-[#F3095A] bg-red-50';
       case 'reminder':
-        return 'text-blue-600 bg-blue-100';
+        return 'text-[#B934E3] bg-purple-50';
       default:
-        return 'text-blue-600 bg-blue-100';
+        return 'text-[#DD198D] bg-pink-50';
     }
   };
 
@@ -172,7 +172,7 @@ export function NotificationsScreen() {
                 <div
                   key={notification.id}
                   className={`bg-card rounded-xl shadow-sm border transition-all ${
-                    !notification.isRead ? 'border-l-4 border-l-primary bg-primary/5' : 'border-border'
+                    !notification.isRead ? 'border-l-4 border-l-[#DD198D] bg-pink-50' : 'border-border'
                   } p-4 md:p-8`}
                 >
                   <div className="flex items-start space-x-3 md:space-x-5">
@@ -200,7 +200,7 @@ export function NotificationsScreen() {
                               onClick={() => markAsRead(notification.id)}
                               variant="ghost"
                               size="sm"
-                              className="text-primary hover:text-primary hover:bg-primary/10 text-xs md:text-sm"
+                              className="text-[#DD198D] hover:text-[#B934E3] hover:bg-pink-50 text-xs md:text-sm"
                             >
                               <span className="hidden sm:inline">Marcar como leída</span>
                               <span className="sm:hidden">Marcar</span>
@@ -210,7 +210,7 @@ export function NotificationsScreen() {
                             onClick={() => deleteNotification(notification.id)}
                             variant="ghost"
                             size="sm"
-                            className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 h-8 w-8 p-0"
+                            className="text-gray-600 hover:text-red-600 hover:bg-red-50 h-8 w-8 p-0"
                           >
                             <Trash2 className="w-4 h-4" />
                           </Button>
@@ -233,7 +233,7 @@ export function NotificationsScreen() {
                 <h4 className="font-semibold text-foreground text-sm md:text-base">Verificaciones de citación</h4>
                 <p className="text-muted-foreground mt-1 text-xs md:text-sm break-words">Recibir notificaciones cuando se complete una verificación</p>
               </div>
-              <div className="w-12 h-6 bg-primary rounded-full relative flex-shrink-0">
+              <div className="w-12 h-6 bg-gradient-to-r from-[#DD198D] to-[#B934E3] rounded-full relative flex-shrink-0">
                 <div className="w-5 h-5 bg-white rounded-full absolute top-0.5 right-0.5 transition-all shadow-sm"></div>
               </div>
             </div>
@@ -243,7 +243,7 @@ export function NotificationsScreen() {
                 <h4 className="font-semibold text-foreground text-sm md:text-base">Actualizaciones reglamentarias</h4>
                 <p className="text-muted-foreground mt-1 text-xs md:text-sm break-words">Recibir notificaciones sobre cambios en reglamentos y procedimientos</p>
               </div>
-              <div className="w-12 h-6 bg-primary rounded-full relative flex-shrink-0">
+              <div className="w-12 h-6 bg-gradient-to-r from-[#DD198D] to-[#B934E3] rounded-full relative flex-shrink-0">
                 <div className="w-5 h-5 bg-white rounded-full absolute top-0.5 right-0.5 transition-all shadow-sm"></div>
               </div>
             </div>

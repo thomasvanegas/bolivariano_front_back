@@ -241,7 +241,7 @@ export function NotificationManagerScreen() {
                   <Button
                     onClick={handleSendNotification}
                     disabled={!title.trim() || !message.trim() || isSending}
-                    className="px-4 md:px-6 w-full md:w-auto"
+                    className="px-4 md:px-6 w-full md:w-auto bg-gradient-to-r from-[#B934E3] to-[#F3095A] hover:opacity-90 text-white"
                   >
                     {isSending ? (
                       <>

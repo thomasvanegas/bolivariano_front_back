@@ -42,3 +42,9 @@ next-env.d.ts
 
 # Instrucciones deployment
 INSTRUCCIONES_DEPLOYMENT.md
+
+# markdown files
+/markdown
+
+# powershell scripts
+iniciar.ps1

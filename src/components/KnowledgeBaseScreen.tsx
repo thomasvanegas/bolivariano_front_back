@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Upload, FileText, Trash2, Download, Search, Filter, Plus } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Badge } from './ui/badge';
+import { api, DocumentResponse } from '@/lib/api';
+import { toast } from 'sonner';
 
 interface Document {
-  id: string;
+  id: number;
   name: string;
   type: string;
   size: string;
@@ -15,86 +17,115 @@ interface Document {
 }
 
 export function KnowledgeBaseScreen() {
-  const [documents, setDocuments] = useState<Document[]>([
-    {
-      id: '1',
-      name: 'Reglamento Estudiantil UBV.pdf',
-      type: 'PDF',
-      size: '2.4 MB',
-      uploadDate: new Date(2024, 11, 6, 14, 30),
-      category: 'Reglamentos',
-      status: 'ready',
-    },
-    {
-      id: '2',
-      name: 'Procedimientos Académicos Ingeniería de Sistemas.pdf',
-      type: 'PDF',
-      size: '1.8 MB',
-      uploadDate: new Date(2024, 11, 6, 10, 15),
-      category: 'Procedimientos',
-      status: 'ready',
-    },
-    {
-      id: '3',
-      name: 'Calendario Académico 2025.pdf',
-      type: 'PDF',
-      size: '3.2 MB',
-      uploadDate: new Date(2024, 11, 5, 16, 45),
-      category: 'Calendario',
-      status: 'processing',
-    },
-    {
-      id: '4',
-      name: 'Requisitos Prácticas Profesionales.pdf',
-      type: 'PDF',
-      size: '1.9 MB',
-      uploadDate: new Date(2024, 11, 5, 9, 20),
-      category: 'Prácticas',
-      status: 'ready',
-    },
-  ]);
-
+  const [documents, setDocuments] = useState<Document[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [isUploading, setIsUploading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [categories, setCategories] = useState<string[]>(['all', 'Reglamentos', 'Procedimientos', 'Calendario', 'Prácticas', 'Pensum']);
 
-  const categories = ['all', 'Reglamentos', 'Procedimientos', 'Calendario', 'Prácticas', 'Pensum'];
+  // Cargar documentos al montar el componente
+  useEffect(() => {
+    loadDocuments();
+    loadCategories();
+  }, []);
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (files) {
-      setIsUploading(true);
-      // Simulate upload process
-      setTimeout(() => {
-        const newDocuments = Array.from(files).map((file, index) => ({
-          id: (Date.now() + index).toString(),
-          name: file.name,
-          type: 'PDF',
-          size: `${(file.size / 1024 / 1024).toFixed(1)} MB`,
-          uploadDate: new Date(),
-          category: 'Sin categoría',
-          status: 'processing' as const,
-        }));
-        
-        setDocuments(prev => [...newDocuments, ...prev]);
-        setIsUploading(false);
-        
-        // Simulate processing completion
-        setTimeout(() => {
-          setDocuments(prev => 
-            prev.map(doc => 
-              newDocuments.some(newDoc => newDoc.id === doc.id)
-                ? { ...doc, status: 'ready' as const }
-                : doc
-            )
-          );
-        }, 3000);
-      }, 1000);
+  const loadDocuments = async () => {
+    try {
+      setIsLoading(true);
+      const response = await api.listDocuments();
+      
+      // Convertir DocumentResponse a Document
+      const convertedDocs: Document[] = response.documents.map((doc: DocumentResponse) => ({
+        id: doc.id,
+        name: doc.name,
+        type: doc.file_type,
+        size: formatFileSize(doc.file_size),
+        uploadDate: new Date(doc.created_at),
+        category: doc.category,
+        status: doc.status,
+      }));
+      
+      setDocuments(convertedDocs);
+    } catch (error: any) {
+      console.error('Error al cargar documentos:', error);
+      toast.error('Error al cargar documentos: ' + (error.message || 'Error desconocido'));
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const deleteDocument = (id: string) => {
-    setDocuments(prev => prev.filter(doc => doc.id !== id));
+  const loadCategories = async () => {
+    try {
+      const response = await api.listCategories();
+      setCategories(['all', ...response.categories]);
+    } catch (error) {
+      console.error('Error al cargar categorías:', error);
+    }
+  };
+
+  const formatFileSize = (bytes: number): string => {
+    return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
+  };
+
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (!files || files.length === 0) return;
+
+    setIsUploading(true);
+    
+    try {
+      // Subir cada archivo
+      const uploadPromises = Array.from(files).map(async (file) => {
+        try {
+          const response = await api.uploadDocument(file, 'Sin categoría');
+          toast.success(`Documento "${file.name}" subido exitosamente`);
+          return response;
+        } catch (error: any) {
+          toast.error(`Error al subir "${file.name}": ${error.message}`);
+          throw error;
+        }
+      });
+
+      await Promise.all(uploadPromises);
+      
+      // Recargar la lista de documentos
+      await loadDocuments();
+      await loadCategories(); // Actualizar categorías por si se agregó una nueva
+      
+    } catch (error) {
+      console.error('Error al subir archivos:', error);
+    } finally {
+      setIsUploading(false);
+      // Limpiar el input para permitir subir el mismo archivo nuevamente
+      event.target.value = '';
+    }
+  };
+
+  const deleteDocument = async (id: number) => {
+    try {
+      await api.deleteDocument(id);
+      toast.success('Documento eliminado exitosamente');
+      
+      // Actualizar la lista localmente
+      setDocuments(prev => prev.filter(doc => doc.id !== id));
+    } catch (error: any) {
+      console.error('Error al eliminar documento:', error);
+      toast.error('Error al eliminar documento: ' + (error.message || 'Error desconocido'));
+    }
+  };
+
+  const handleDownload = async (id: number, filename: string) => {
+    try {
+      const response = await api.getDownloadUrl(id);
+      
+      // Abrir en nueva pestaña para descargar
+      window.open(response.download_url, '_blank');
+      toast.success('Descargando documento...');
+    } catch (error: any) {
+      console.error('Error al descargar documento:', error);
+      toast.error('Error al descargar: ' + (error.message || 'Error desconocido'));
+    }
   };
 
   const getStatusBadge = (status: string) => {
@@ -136,7 +167,7 @@ export function KnowledgeBaseScreen() {
             </div>
           </div>
           
-          <div className="border-2 border-dashed border-border rounded-xl p-6 md:p-12 text-center hover:border-primary/50 transition-colors">
+          <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 md:p-12 text-center hover:border-[#DD198D] transition-colors">
             <Upload className="w-8 h-8 md:w-12 md:h-12 text-muted-foreground mx-auto mb-4" />
             <h4 className="text-base md:text-lg font-medium text-foreground mb-2">
               Arrastra archivos aquí o haz clic para seleccionar
@@ -155,7 +186,7 @@ export function KnowledgeBaseScreen() {
                 id="file-upload"
               />
               <label htmlFor="file-upload" className="w-full sm:w-auto">
-                <Button asChild disabled={isUploading} className="cursor-pointer w-full sm:w-auto">
+                <Button asChild disabled={isUploading} className="cursor-pointer w-full sm:w-auto bg-gradient-to-r from-[#DD198D] to-[#B934E3] hover:opacity-90 text-white">
                   <span>
                     <Plus className="w-4 h-4 mr-2" />
                     {isUploading ? 'Subiendo...' : 'Seleccionar Archivos'}
@@ -210,7 +241,12 @@ export function KnowledgeBaseScreen() {
           </div>
           
           <div className="divide-y divide-border">
-            {filteredDocuments.length === 0 ? (
+            {isLoading ? (
+              <div className="p-8 md:p-12 text-center">
+                <div className="w-8 h-8 md:w-12 md:h-12 mx-auto mb-4 border-4 border-[#DD198D] border-t-transparent rounded-full animate-spin" />
+                <p className="text-muted-foreground text-sm md:text-base">Cargando documentos...</p>
+              </div>
+            ) : filteredDocuments.length === 0 ? (
               <div className="p-8 md:p-12 text-center">
                 <FileText className="w-8 h-8 md:w-12 md:h-12 text-muted-foreground mx-auto mb-4" />
                 <h4 className="text-base md:text-lg font-medium text-foreground mb-2">
@@ -228,8 +264,8 @@ export function KnowledgeBaseScreen() {
                 <div key={document.id} className="p-4 md:p-6 hover:bg-accent/50 transition-colors">
                   <div className="flex items-start md:items-center justify-between gap-4">
                     <div className="flex items-start md:items-center space-x-3 md:space-x-4 flex-1 min-w-0">
-                      <div className="w-10 h-10 md:w-12 md:h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <FileText className="w-5 h-5 md:w-6 md:h-6 text-primary" />
+                      <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-[#DD198D] to-[#B934E3] rounded-lg flex items-center justify-center flex-shrink-0">
+                        <FileText className="w-5 h-5 md:w-6 md:h-6 text-white" />
                       </div>
                       
                       <div className="flex-1 min-w-0">
@@ -251,14 +287,20 @@ export function KnowledgeBaseScreen() {
                       {getStatusBadge(document.status)}
                       
                       <div className="flex items-center space-x-1">
-                        <Button variant="ghost" size="sm" disabled={document.status !== 'ready'} className="h-8 w-8 p-0">
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          disabled={document.status !== 'ready'} 
+                          onClick={() => handleDownload(document.id, document.name)}
+                          className="h-8 w-8 p-0"
+                        >
                           <Download className="w-4 h-4" />
                         </Button>
                         <Button 
                           variant="ghost" 
                           size="sm" 
                           onClick={() => deleteDocument(document.id)}
-                          className="text-destructive hover:text-destructive hover:bg-destructive/10 h-8 w-8 p-0"
+                          className="text-gray-600 hover:text-red-600 hover:bg-red-50 h-8 w-8 p-0"
                         >
                           <Trash2 className="w-4 h-4" />
                         </Button>

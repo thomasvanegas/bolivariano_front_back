@@ -4,10 +4,10 @@ import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Tabs, TabsContent } from './ui/tabs';
-import { BolivarianoLogo } from './BolivarianoLogo';
 import { GraduationCap, Shield, User, Lock, AlertCircle } from 'lucide-react';
 import { api, authUtils } from '@/lib/api';
 import { Alert, AlertDescription } from './ui/alert';
+import Image from 'next/image';
 
 /**
  * Props de la pantalla de inicio de sesión.
@@ -94,23 +94,29 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-bolivariano-blue-50 to-bolivariano-blue-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-red-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md space-y-6">
         {/* Logo y encabezado de la aplicación */}
         <div className="text-center space-y-4">
           <div className="flex justify-center">
-            <BolivarianoLogo size="xl" variant="tile" className="shadow-lg" />
+            <Image 
+              src="/Logo-UPB-2022.png" 
+              alt="Universidad Pontificia Bolivariana" 
+              width={120} 
+              height={120}
+              className="w-auto h-24 object-contain"
+            />
           </div>
           <div>
             <h1 className="text-3xl tracking-tight text-black font-bold">Bolivariano</h1>
-            <p className="text-sm text-bolivariano-blue-700 mt-1 font-medium">
+            <p className="text-sm text-gray-700 mt-1 font-medium">
               Asistente Académico Inteligente
             </p>
           </div>
         </div>
 
         {/* Contenedor principal con tabs para seleccionar el tipo de cuenta (Estudiante/Administrador). */}
-        <Card className="shadow-xl border-0">
+        <Card className="shadow-lg border-0">
           <CardHeader className="space-y-1 pb-4">
             <CardTitle className="text-xl text-center">Iniciar Sesión</CardTitle>
             <CardDescription className="text-center">
@@ -134,23 +140,23 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
               <button
                 type="button"
                 onClick={() => setSelectedRole('student')}
-                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors ${
+                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-smooth ${
                   selectedRole === 'student' 
-                    ? 'text-bolivariano-blue-700 font-semibold' 
-                    : 'text-foreground hover:text-bolivariano-blue-600'
+                    ? 'text-[#DD198D] font-semibold' 
+                    : 'text-gray-700 hover:text-[#DD198D]'
                 }`}
               >
                 <GraduationCap className="w-4 h-4" />
                 Estudiante
               </button>
-              <span className="text-muted-foreground">/</span>
+              <span className="text-gray-400">/</span>
               <button
                 type="button"
                 onClick={() => setSelectedRole('admin')}
-                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors ${
+                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-smooth ${
                   selectedRole === 'admin' 
-                    ? 'text-bolivariano-blue-700 font-semibold' 
-                    : 'text-foreground hover:text-bolivariano-blue-600'
+                    ? 'text-[#B934E3] font-semibold' 
+                    : 'text-gray-700 hover:text-[#B934E3]'
                 }`}
               >
                 <Shield className="w-4 h-4" />
@@ -198,8 +204,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
                   {/* Acción: enviar formulario de estudiante */}
                   <Button 
                     type="submit"
-                    className="w-full"
-                    variant="black"
+                    className="w-full bg-gradient-to-r from-[#DD198D] to-[#B934E3] hover:opacity-90 transition-smooth text-white font-semibold"
                     disabled={isLoading}
                   >
                     {isLoading ? 'Verificando...' : 'Acceder como Estudiante'}
@@ -207,11 +212,19 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
                 </form>
 
                 
-                <div className="text-center text-sm text-muted-foreground mt-4">
-                  <p>¿Olvidaste tu contraseña?</p>
-                  <button className="text-primary hover:underline">
-                    Recuperar acceso (Próximamente)
-                  </button>
+                <div className="text-center text-sm text-gray-600 mt-4 space-y-2">
+                  <p>
+                    ¿No tienes cuenta?{' '}
+                    <button 
+                      className="text-[#DD198D] hover:text-[#B934E3] font-semibold transition-smooth"
+                      onClick={() => window.location.reload()} // Temporal, se mejorará con navegación
+                    >
+                      Regístrate aquí
+                    </button>
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    ¿Olvidaste tu contraseña? Contacta al administrador
+                  </p>
                 </div>
                 
                 
@@ -255,14 +268,13 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
                   {/* Acción: enviar formulario de administrador */}
                   <Button 
                     type="submit"
-                    className="w-full"
-                    variant="black"
+                    className="w-full bg-gradient-to-r from-[#B934E3] to-[#F3095A] hover:opacity-90 transition-smooth text-white font-semibold"
                     disabled={isLoading}
                   >
                     {isLoading ? 'Verificando...' : 'Acceder como Administrador'}
                   </Button>
                 </form>
-                <div className="text-center text-sm text-muted-foreground mt-4">
+                <div className="text-center text-sm text-gray-600 mt-4">
                   <p>Acceso restringido al personal autorizado</p>
                 </div>
               </TabsContent>
@@ -271,9 +283,9 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
         </Card>
 
         {/* Pie de página con información institucional y sello de la aplicación. */}
-        <div className="text-center text-xs text-muted-foreground space-y-1">
+        <div className="text-center text-xs text-gray-600 space-y-1">
           <p>Universidad Pontificia Bolivariana (UPB) | Medellín, Colombia</p>
-          <p className="text-bolivariano-blue-700">Bolivariano: Asistente Académico Inteligente</p>
+          <p className="text-[#B934E3] font-medium">Bolivariano: Asistente Académico Inteligente</p>
         </div>
       </div>
     </div>

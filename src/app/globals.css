@@ -1,168 +1,198 @@
 @import "tailwindcss";
 
+/* ============================================
+   VARIABLES DE COLOR - UNIVERSIDAD BOLIVARIANA
+   ============================================ */
 :root {
-  --font-size: 16px;
-  --background: 248 250 252;
-  --foreground: 15 23 42;
-  --card: 255 255 255;
-  --card-foreground: 15 23 42;
-  --popover: 255 255 255;
-  --popover-foreground: 15 23 42;
-  --primary: 29 78 216;
-  --primary-foreground: 255 255 255;
-  --secondary: 241 245 249;
-  --secondary-foreground: 30 41 59;
-  --muted: 248 250 252;
-  --muted-foreground: 71 85 105;
-  --accent: 219 234 254;
-  --accent-foreground: 30 41 59;
-  --destructive: 220 38 38;
-  --destructive-foreground: 255 255 255;
-  --border: 226 232 240;
-  --input: 0 0 0;
-  --input-background: 255 255 255;
-  --switch-background: 203 213 225;
-  --font-weight-medium: 500;
-  --font-weight-normal: 400;
-  --ring: 29 78 216;
-  --chart-1: 29 78 216;
-  --chart-2: 59 130 246;
-  --chart-3: 147 197 253;
-  --chart-4: 16 185 129;
-  --chart-5: 245 158 11;
-  --radius: 0.5rem;
-  --sidebar: 255 255 255;
-  --sidebar-foreground: 15 23 42;
-  --sidebar-primary: 29 78 216;
-  --sidebar-primary-foreground: 255 255 255;
-  --sidebar-accent: 248 250 252;
-  --sidebar-accent-foreground: 30 41 59;
-  --sidebar-border: 226 232 240;
-  --sidebar-ring: 29 78 216;
+  /* Paleta de colores institucional UPB */
+  --upb-pink: 221 25 141;         /* #DD198D */
+  --upb-red: 243 9 90;            /* #F3095A */
+  --upb-purple: 185 52 227;       /* #B934E3 */
+  --upb-white: 255 255 255;       /* #FFFFFF */
+  --upb-black: 0 0 0;             /* #000000 */
   
-  /* Bolivariano Brand Colors - Paleta Azul Profesional */
-  --bolivariano-primary: 29 78 216;
-  --bolivariano-secondary: 59 130 246;
-  --bolivariano-accent: 147 197 253;
-  --bolivariano-dark: 15 23 42;
-  --bolivariano-light: 248 250 252;
-  --bolivariano-blue-50: 239 246 255;
-  --bolivariano-blue-100: 219 234 254;
-  --bolivariano-blue-200: 191 219 254;
-  --bolivariano-blue-300: 147 197 253;
-  --bolivariano-blue-400: 96 165 250;
-  --bolivariano-blue-500: 59 130 246;
-  --bolivariano-blue-600: 37 99 235;
-  --bolivariano-blue-700: 29 78 216;
-  --bolivariano-blue-800: 30 64 175;
-  --bolivariano-blue-900: 30 58 138;
-}
-
-.dark {
-  --background: 15 23 42;
-  --foreground: 248 250 252;
-  --card: 15 23 42;
-  --card-foreground: 248 250 252;
-  --popover: 15 23 42;
-  --popover-foreground: 248 250 252;
-  --primary: 248 250 252;
-  --primary-foreground: 15 23 42;
-  --secondary: 30 41 59;
-  --secondary-foreground: 248 250 252;
-  --muted: 30 41 59;
-  --muted-foreground: 148 163 184;
-  --accent: 30 41 59;
-  --accent-foreground: 248 250 252;
+  /* Tonos derivados de la paleta principal */
+  --upb-pink-light: 255 220 242;  /* Tono claro del rosa */
+  --upb-red-light: 255 230 240;   /* Tono claro del rojo */
+  --upb-purple-light: 240 220 250; /* Tono claro del morado */
+  
+  /* Grises para UI */
+  --gray-50: 249 250 251;
+  --gray-100: 243 244 246;
+  --gray-200: 229 231 235;
+  --gray-300: 209 213 219;
+  --gray-400: 156 163 175;
+  --gray-500: 107 114 128;
+  --gray-600: 75 85 99;
+  --gray-700: 55 65 81;
+  --gray-800: 31 41 55;
+  --gray-900: 17 24 39;
+  
+  /* Variables semánticas del sistema */
+  --background: var(--upb-white);
+  --foreground: var(--upb-black);
+  --primary: var(--upb-pink);
+  --primary-foreground: var(--upb-white);
+  --secondary: var(--upb-purple);
+  --secondary-foreground: var(--upb-white);
+  --accent: var(--upb-red);
+  --accent-foreground: var(--upb-white);
+  --muted: var(--gray-100);
+  --muted-foreground: var(--gray-500);
+  --border: var(--gray-200);
+  --input-border: var(--gray-300);
+  --ring: var(--upb-pink);
   --destructive: 239 68 68;
-  --destructive-foreground: 248 250 252;
-  --border: 30 41 59;
-  --input: 30 41 59;
-  --ring: 59 130 246;
-  --font-weight-medium: 500;
-  --font-weight-normal: 400;
-  --chart-1: 59 130 246;
-  --chart-2: 6 182 212;
-  --chart-3: 139 92 246;
-  --chart-4: 16 185 129;
-  --chart-5: 245 158 11;
-  --sidebar: 15 23 42;
-  --sidebar-foreground: 248 250 252;
-  --sidebar-primary: 59 130 246;
-  --sidebar-primary-foreground: 248 250 252;
-  --sidebar-accent: 30 41 59;
-  --sidebar-accent-foreground: 248 250 252;
-  --sidebar-border: 30 41 59;
-  --sidebar-ring: 59 130 246;
+  --destructive-foreground: var(--upb-white);
+  
+  /* Componentes específicos */
+  --card-bg: var(--upb-white);
+  --card-border: var(--gray-200);
+  --button-hover: var(--gray-50);
+  
+  /* Configuración general */
+  --radius: 0.5rem;
+  --font-size: 16px;
 }
 
-
+/* ============================================
+   BASE STYLES
+   ============================================ */
 @layer base {
   * {
-    @apply border-gray-200;
+    box-sizing: border-box;
+    border-color: rgb(var(--border));
   }
 
-  /* Prevent horizontal scroll */
-  html, body {
+  html {
+    font-size: var(--font-size);
     overflow-x: hidden;
-    max-width: 100vw;
   }
 
   body {
-    @apply bg-white text-gray-900;
-  }
-
-  /* Ensure all containers respect viewport width */
-  * {
-    box-sizing: border-box;
-  }
-
-  /* Additional mobile-specific rules */
-  @media (max-width: 768px) {
-    .container {
-      max-width: 100%;
-      padding-left: 1rem;
-      padding-right: 1rem;
-    }
+    background-color: rgb(var(--background));
+    color: rgb(var(--foreground));
+    overflow-x: hidden;
+    max-width: 100vw;
+    font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
-/**
- * Base typography. This is not applied to elements which have an ancestor with a Tailwind text class.
- */
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
 @layer base {
   h1 {
-    @apply text-2xl font-medium leading-6;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
   }
 
   h2 {
-    @apply text-xl font-medium leading-6;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.025em;
   }
 
   h3 {
-    @apply text-lg font-medium leading-6;
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.4;
   }
 
   h4 {
-    @apply text-base font-medium leading-6;
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.5;
   }
 
   p {
-    @apply text-base font-normal leading-6;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.6;
   }
 
   label {
-    @apply text-base font-medium leading-6;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.5;
   }
 
   button {
-    @apply text-base font-medium leading-6;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.5;
   }
 
-  input {
-    @apply text-base font-normal leading-6;
+  input, textarea {
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5;
   }
 }
 
-html {
-  font-size: var(--font-size);
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+/* Gradientes institucionales */
+.gradient-upb-primary {
+  background: linear-gradient(135deg, rgb(var(--upb-pink)) 0%, rgb(var(--upb-purple)) 100%);
+}
+
+.gradient-upb-secondary {
+  background: linear-gradient(135deg, rgb(var(--upb-red)) 0%, rgb(var(--upb-pink)) 100%);
+}
+
+.gradient-upb-accent {
+  background: linear-gradient(135deg, rgb(var(--upb-purple)) 0%, rgb(var(--upb-red)) 100%);
+}
+
+/* Efectos de hover suaves */
+.transition-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Sombras personalizadas */
+.shadow-upb {
+  box-shadow: 0 4px 6px -1px rgba(221, 25, 141, 0.1), 0 2px 4px -1px rgba(221, 25, 141, 0.06);
+}
+
+.shadow-upb-lg {
+  box-shadow: 0 10px 15px -3px rgba(221, 25, 141, 0.1), 0 4px 6px -2px rgba(221, 25, 141, 0.05);
 }

@@ -70,7 +70,7 @@ export function CitationScreen() {
             value={citationText}
             onChange={(e) => setCitationText(e.target.value)}
             placeholder="Pega aquí la citación que deseas verificar..."
-            className="min-h-32 md:min-h-40 resize-none border-border focus:border-primary focus:ring-primary/20"
+            className="min-h-32 md:min-h-40 resize-none border-gray-300 focus:border-[#DD198D] focus:ring-pink-100"
           />
           
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mt-4 md:mt-6">
@@ -84,7 +84,7 @@ export function CitationScreen() {
             <Button
               onClick={handleVerifyCitation}
               disabled={!citationText.trim() || isVerifying}
-              className="px-4 md:px-6 w-full md:w-auto"
+              className="px-4 md:px-6 w-full md:w-auto bg-gradient-to-r from-[#DD198D] to-[#B934E3] hover:opacity-90 text-white"
             >
               {isVerifying ? (
                 <>
@@ -148,7 +148,7 @@ export function CitationScreen() {
         {/* Example Citations */}
         <div className="bg-card rounded-xl shadow-sm border border-border p-4 md:p-8">
           <div className="flex items-center space-x-3 mb-4 md:mb-6">
-            <BookOpen className="w-5 h-5 md:w-6 md:h-6 text-primary" />
+            <BookOpen className="w-5 h-5 md:w-6 md:h-6 text-[#DD198D]" />
             <h3 className="text-lg md:text-xl font-semibold text-foreground">Ejemplos de Citaciones</h3>
           </div>
           
@@ -156,14 +156,14 @@ export function CitationScreen() {
             {exampleCitations.map((example, index) => (
               <div key={index} className="border border-border rounded-xl p-4 md:p-6">
                 <div className="flex items-center justify-between mb-3 md:mb-4 gap-4">
-                  <span className="px-2 py-1 md:px-3 md:py-1.5 bg-primary/10 text-primary rounded-full text-sm">
+                  <span className="px-2 py-1 md:px-3 md:py-1.5 bg-pink-50 text-[#DD198D] rounded-full text-sm font-medium">
                     {example.style}
                   </span>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => setCitationText(example.text)}
-                    className="text-primary hover:text-primary hover:bg-primary/10 flex-shrink-0"
+                    className="text-[#DD198D] hover:text-[#B934E3] hover:bg-pink-50 flex-shrink-0"
                   >
                     <span className="hidden sm:inline">Usar ejemplo</span>
                     <span className="sm:hidden">Usar</span>

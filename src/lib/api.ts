@@ -26,6 +26,29 @@ export interface ApiError {
   detail: string;
 }
 
+export interface DocumentResponse {
+  id: number;
+  name: string;
+  file_type: string;
+  file_size: number;
+  category: string;
+  status: 'processing' | 'ready' | 'error';
+  storage_url: string;
+  storage_key: string;
+  uploaded_by?: number;
+  uploaded_by_type?: string;
+  description?: string;
+  tags?: string;
+  created_at: string;
+  updated_at?: string;
+  processed_at?: string;
+}
+
+export interface DocumentListResponse {
+  total: number;
+  documents: DocumentResponse[];
+}
+
 /**
  * Credenciales de login para estudiantes
  */
@@ -155,6 +178,240 @@ export const api = {
       return await response.json();
     } catch (error) {
       throw new Error('API no disponible');
+    }
+  },
+
+  /**
+   * Subir documento a la base de conocimiento
+   */
+  async uploadDocument(
+    file: File,
+    category: string = 'Sin categoría',
+    description?: string,
+    tags?: string,
+    token?: string
+  ): Promise<DocumentResponse> {
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('category', category);
+      if (description) formData.append('description', description);
+      if (tags) formData.append('tags', tags);
+
+      const headers: HeadersInit = {};
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
+      const response = await fetch(`${API_BASE_URL}/api/documents/upload`, {
+        method: 'POST',
+        headers,
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const error: ApiError = await response.json();
+        throw new ApiErrorHandler(response.status, error.detail || 'Error al subir documento');
+      }
+
+      return await response.json();
+    } catch (error) {
+      if (error instanceof ApiErrorHandler) {
+        throw error;
+      }
+      throw new ApiErrorHandler(0, 'No se pudo conectar con el servidor.');
+    }
+  },
+
+  /**
+   * Listar documentos con filtros opcionales
+   */
+  async listDocuments(params?: {
+    skip?: number;
+    limit?: number;
+    category?: string;
+    status?: string;
+    search?: string;
+    token?: string;
+  }): Promise<DocumentListResponse> {
+    try {
+      const queryParams = new URLSearchParams();
+      if (params?.skip !== undefined) queryParams.append('skip', params.skip.toString());
+      if (params?.limit !== undefined) queryParams.append('limit', params.limit.toString());
+      if (params?.category) queryParams.append('category', params.category);
+      if (params?.status) queryParams.append('status', params.status);
+      if (params?.search) queryParams.append('search', params.search);
+
+      const headers: HeadersInit = {};
+      if (params?.token) {
+        headers['Authorization'] = `Bearer ${params.token}`;
+      }
+
+      const url = `${API_BASE_URL}/api/documents?${queryParams.toString()}`;
+      const response = await fetch(url, { headers });
+
+      if (!response.ok) {
+        const error: ApiError = await response.json();
+        throw new ApiErrorHandler(response.status, error.detail || 'Error al listar documentos');
+      }
+
+      return await response.json();
+    } catch (error) {
+      if (error instanceof ApiErrorHandler) {
+        throw error;
+      }
+      throw new ApiErrorHandler(0, 'No se pudo conectar con el servidor.');
+    }
+  },
+
+  /**
+   * Obtener un documento específico
+   */
+  async getDocument(documentId: number, token?: string): Promise<DocumentResponse> {
+    try {
+      const headers: HeadersInit = {};
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
+      const response = await fetch(`${API_BASE_URL}/api/documents/${documentId}`, { headers });
+
+      if (!response.ok) {
+        const error: ApiError = await response.json();
+        throw new ApiErrorHandler(response.status, error.detail || 'Error al obtener documento');
+      }
+
+      return await response.json();
+    } catch (error) {
+      if (error instanceof ApiErrorHandler) {
+        throw error;
+      }
+      throw new ApiErrorHandler(0, 'No se pudo conectar con el servidor.');
+    }
+  },
+
+  /**
+   * Actualizar metadata de un documento
+   */
+  async updateDocument(
+    documentId: number,
+    updates: {
+      category?: string;
+      description?: string;
+      tags?: string;
+      status?: 'processing' | 'ready' | 'error';
+    },
+    token?: string
+  ): Promise<DocumentResponse> {
+    try {
+      const headers: HeadersInit = {
+        'Content-Type': 'application/json',
+      };
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
+      const response = await fetch(`${API_BASE_URL}/api/documents/${documentId}`, {
+        method: 'PUT',
+        headers,
+        body: JSON.stringify(updates),
+      });
+
+      if (!response.ok) {
+        const error: ApiError = await response.json();
+        throw new ApiErrorHandler(response.status, error.detail || 'Error al actualizar documento');
+      }
+
+      return await response.json();
+    } catch (error) {
+      if (error instanceof ApiErrorHandler) {
+        throw error;
+      }
+      throw new ApiErrorHandler(0, 'No se pudo conectar con el servidor.');
+    }
+  },
+
+  /**
+   * Eliminar un documento
+   */
+  async deleteDocument(documentId: number, token?: string): Promise<{ message: string; document_id: number }> {
+    try {
+      const headers: HeadersInit = {};
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
+      const response = await fetch(`${API_BASE_URL}/api/documents/${documentId}`, {
+        method: 'DELETE',
+        headers,
+      });
+
+      if (!response.ok) {
+        const error: ApiError = await response.json();
+        throw new ApiErrorHandler(response.status, error.detail || 'Error al eliminar documento');
+      }
+
+      return await response.json();
+    } catch (error) {
+      if (error instanceof ApiErrorHandler) {
+        throw error;
+      }
+      throw new ApiErrorHandler(0, 'No se pudo conectar con el servidor.');
+    }
+  },
+
+  /**
+   * Obtener URL de descarga temporal para un documento
+   */
+  async getDownloadUrl(
+    documentId: number,
+    token?: string
+  ): Promise<{ download_url: string; document_id: number; filename: string }> {
+    try {
+      const headers: HeadersInit = {};
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
+      const response = await fetch(`${API_BASE_URL}/api/documents/${documentId}/download-url`, { headers });
+
+      if (!response.ok) {
+        const error: ApiError = await response.json();
+        throw new ApiErrorHandler(response.status, error.detail || 'Error al obtener URL de descarga');
+      }
+
+      return await response.json();
+    } catch (error) {
+      if (error instanceof ApiErrorHandler) {
+        throw error;
+      }
+      throw new ApiErrorHandler(0, 'No se pudo conectar con el servidor.');
+    }
+  },
+
+  /**
+   * Obtener lista de categorías
+   */
+  async listCategories(token?: string): Promise<{ categories: string[] }> {
+    try {
+      const headers: HeadersInit = {};
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
+      const response = await fetch(`${API_BASE_URL}/api/documents/categories/list`, { headers });
+
+      if (!response.ok) {
+        const error: ApiError = await response.json();
+        throw new ApiErrorHandler(response.status, error.detail || 'Error al listar categorías');
+      }
+
+      return await response.json();
+    } catch (error) {
+      if (error instanceof ApiErrorHandler) {
+        throw error;
+      }
+      throw new ApiErrorHandler(0, 'No se pudo conectar con el servidor.');
     }
   },
 };

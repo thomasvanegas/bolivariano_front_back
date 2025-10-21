@@ -85,8 +85,8 @@ export function HistoryScreen() {
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start space-x-3 md:space-x-5 flex-1 min-w-0">
-                    <div className="w-10 h-10 md:w-12 md:h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <MessageCircle className="w-5 h-5 md:w-6 md:h-6 text-primary" />
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-[#DD198D] to-[#B934E3] rounded-xl flex items-center justify-center flex-shrink-0">
+                      <MessageCircle className="w-5 h-5 md:w-6 md:h-6 text-white" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <h3 className="font-semibold text-foreground text-base md:text-lg break-words">
@@ -106,7 +106,7 @@ export function HistoryScreen() {
                     </div>
                   </div>
                   <div className="flex items-center space-x-2 flex-shrink-0">
-                    <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 h-8 w-8 p-0">
+                    <Button variant="ghost" size="sm" className="text-gray-600 hover:text-red-600 hover:bg-red-50 h-8 w-8 p-0">
                       <Trash2 className="w-4 h-4" />
                     </Button>
                   </div>

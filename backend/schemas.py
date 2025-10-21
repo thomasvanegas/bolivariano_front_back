@@ -1,6 +1,14 @@
 from pydantic import BaseModel, EmailStr, Field
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
+from enum import Enum
+
+
+# ===== ENUMS =====
+class DocumentStatusEnum(str, Enum):
+    PROCESSING = "processing"
+    READY = "ready"
+    ERROR = "error"
 
 
 # ===== SCHEMAS PARA ESTUDIANTES =====
@@ -66,4 +74,49 @@ class TokenResponse(BaseModel):
 class MessageResponse(BaseModel):
     message: str
     detail: Optional[str] = None
+
+
+# ===== SCHEMAS PARA DOCUMENTOS =====
+class DocumentBase(BaseModel):
+    name: str
+    file_type: str
+    category: str = "Sin categoría"
+    description: Optional[str] = None
+    tags: Optional[str] = None
+
+
+class DocumentCreate(DocumentBase):
+    file_size: int
+    storage_url: str
+    storage_key: str
+    uploaded_by: Optional[int] = None
+    uploaded_by_type: Optional[str] = None
+
+
+class DocumentUpdate(BaseModel):
+    category: Optional[str] = None
+    description: Optional[str] = None
+    tags: Optional[str] = None
+    status: Optional[DocumentStatusEnum] = None
+
+
+class DocumentResponse(DocumentBase):
+    id: int
+    file_size: int
+    status: DocumentStatusEnum
+    storage_url: str
+    storage_key: str
+    uploaded_by: Optional[int] = None
+    uploaded_by_type: Optional[str] = None
+    created_at: datetime
+    updated_at: Optional[datetime] = None
+    processed_at: Optional[datetime] = None
+
+    class Config:
+        from_attributes = True
+
+
+class DocumentListResponse(BaseModel):
+    total: int
+    documents: List[DocumentResponse]
 

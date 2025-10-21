@@ -3,6 +3,7 @@ import { Button } from './ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from './ui/sheet';
 import { Menu, MessageCircle, History, Quote, HelpCircle, Bell, BookOpen, Send, LogOut } from 'lucide-react';
 import { Screen, UserRole } from '../app/App';
+import Image from 'next/image';
 
 interface MobileNavProps {
   currentScreen: Screen;
@@ -46,14 +47,18 @@ export function MobileNav({ currentScreen, onScreenChange, userRole, onLogout }:
           </SheetDescription>
           <div className="flex flex-col h-full">
             {/* Header */}
-            <div className="p-6 border-b bg-primary/5">
+            <div className="p-6 border-b bg-gradient-to-br from-pink-50 to-purple-50">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-primary rounded-md flex items-center justify-center">
-                  <span className="text-sm text-white">B</span>
-                </div>
+                <Image 
+                  src="/Logo-UPB-2022.svg" 
+                  alt="UPB" 
+                  width={32} 
+                  height={32}
+                  className="w-8 h-8 object-contain"
+                />
                 <div>
-                  <h2 className="font-medium">Bolivariano</h2>
-                  <p className="text-xs text-muted-foreground">
+                  <h2 className="font-semibold text-black">Bolivariano</h2>
+                  <p className="text-xs text-gray-600">
                     {userRole === 'admin' ? 'Panel Administrativo' : 'Asistente Académico'}
                   </p>
                 </div>
@@ -67,10 +72,10 @@ export function MobileNav({ currentScreen, onScreenChange, userRole, onLogout }:
                   <button
                     key={item.id}
                     onClick={() => onScreenChange(item.id)}
-                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors ${
+                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-smooth ${
                       currentScreen === item.id
-                        ? 'bg-primary text-primary-foreground'
-                        : 'text-muted-foreground hover:text-foreground hover:bg-accent'
+                        ? 'bg-gradient-to-r from-[#DD198D] to-[#B934E3] text-white font-medium'
+                        : 'text-gray-700 hover:text-[#DD198D] hover:bg-gray-50'
                     }`}
                   >
                     <item.icon className="h-4 w-4" />
@@ -85,7 +90,7 @@ export function MobileNav({ currentScreen, onScreenChange, userRole, onLogout }:
               <Button
                 variant="ghost"
                 onClick={onLogout}
-                className="w-full justify-start gap-3 text-muted-foreground hover:text-foreground"
+                className="w-full justify-start gap-3 text-gray-700 hover:text-[#DD198D] hover:bg-gray-50"
               >
                 <LogOut className="h-4 w-4" />
                 Cerrar Sesión
